@@ -1,10 +1,13 @@
 package com.luis.demo_jpa.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +19,8 @@ public class Person {
     private long id;
 
     private String name;
+    @OneToMany
+    private List<Rol> role;
     
     private String lastname;
     
@@ -62,6 +67,14 @@ public class Person {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public List<Rol> getRole() {
+        return role;
+    }
+
+    public void setRole(List<Rol> role) {
+        this.role = role;
     }
 
 
