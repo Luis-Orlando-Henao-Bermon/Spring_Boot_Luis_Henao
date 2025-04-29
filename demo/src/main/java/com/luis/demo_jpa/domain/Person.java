@@ -1,26 +1,35 @@
 package com.luis.demo_jpa.domain;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "personas")
+@Getter
+@Setter
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "full_name",columnDefinition = "TEXT",length = 50,nullable = false)
     private String name;
-    @OneToMany
-    private List<Rol> role;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id",nullable = false)
+    @JsonBackReference
+    private Rol role;
     
     private String lastname;
     
@@ -36,48 +45,5 @@ public class Person {
         this.lastname = lastname;
         this.language = language;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public List<Rol> getRole() {
-        return role;
-    }
-
-    public void setRole(List<Rol> role) {
-        this.role = role;
-    }
-
-
-    
 
 }

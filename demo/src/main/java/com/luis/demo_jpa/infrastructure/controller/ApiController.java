@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.luis.demo_jpa.application.service.PersonService;
 import com.luis.demo_jpa.domain.Person;
+import com.luis.demo_jpa.domain.Rol;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -28,13 +29,25 @@ public class ApiController {
 
 
 
-    @GetMapping("users")    
-    public List<Person> findAll(
+    @GetMapping("/users")    
+    public List<Person> findAllUser(
         @RequestParam(defaultValue = "") String filter,
         @RequestParam(defaultValue = "") String value
 
     ){
-        List<Person> results= personService.findAllByFilter(filter,value);
+        List<Person> results= personService.findAllUsersByFilter(filter,value);
+        return results;
+    }
+    
+    
+    
+    @GetMapping("/roles")    
+    public List<Rol> findAllRoles(
+        @RequestParam(defaultValue = "") String filter,
+        @RequestParam(defaultValue = "") String value
+
+    ){
+        List<Rol> results= personService.findAllRolByFilter(filter,value);
         return results;
     }
 
