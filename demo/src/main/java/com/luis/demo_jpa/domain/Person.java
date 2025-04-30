@@ -1,14 +1,26 @@
 package com.luis.demo_jpa.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +38,9 @@ public class Person {
     @Column(name = "full_name",columnDefinition = "TEXT",length = 50,nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     private Rol role;
     
@@ -35,6 +48,19 @@ public class Person {
     
     @Column(name = "programingLanguage")
     private String language;
+
+    @OneToOne(mappedBy = "person")    
+    @JsonManagedReference
+    private Passport passport;
+
+
+    @ManyToMany
+    @JoinTable(name= "personas_proyects",
+        joinColumns = @JoinColumn(name = "person_id",foreignKey = @ForeignKey(name="fk_persona_id_projects")),
+        inverseJoinColumns = @JoinColumn(name="proyect_id")
+    )
+    @JsonBackReference
+    private List<Project> projects =new ArrayList<>();
 
     public Person() {
     }

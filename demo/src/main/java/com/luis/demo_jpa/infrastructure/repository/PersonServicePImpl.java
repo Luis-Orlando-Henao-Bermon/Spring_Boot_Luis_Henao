@@ -19,7 +19,6 @@ public class PersonServicePImpl implements PersonService{
 
     @Override
     public List<Rol> findAllRolByFilter(String filter, String value) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllRolesByFilter'");
     }
 
